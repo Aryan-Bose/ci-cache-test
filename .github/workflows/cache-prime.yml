@@ -1,0 +1,31 @@
+name: Prime cache-9c7b300
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  prime-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Restore or create cache
+        id: cache
+        uses: actions/cache@v4
+        with:
+          path: prime-cache
+          key: cache-9c7b300
+
+      - name: Create/modify cacheable content
+        run: |
+          mkdir -p prime-cache
+          echo "Primed at $(date --utc)" > prime-cache/primed.txt
+          echo "prime-cache contents:"
+          ls -la prime-cache
+
+      - name: prime-cache-9c7b300
+        run: |
+          echo "Cache hit? ${{ steps.cache.outputs.cache-hit }}"
+          echo "Cache key used: cache-9c7b300"
